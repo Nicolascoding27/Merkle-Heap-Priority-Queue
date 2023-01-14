@@ -1,0 +1,10 @@
+# TypeScript files
+src
+#
+build
+
+# Editor
+.vscode
+
+# System
+.DS_Store

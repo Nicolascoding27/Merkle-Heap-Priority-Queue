@@ -1,0 +1,9 @@
+node_modules
+build
+coverage
+
+.vscode
+
+.DS_store
+
+*.tgz
