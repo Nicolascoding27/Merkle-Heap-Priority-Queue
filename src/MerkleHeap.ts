@@ -2,7 +2,8 @@ import { Field } from "snarkyjs";
 
 export class MerkleHeap {
 
-    constructor() {
+    constructor() { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
+    //Option 2: Instance Merkle Tree library in a variable , can theuy accesses to the private methods? 
         
     }
 
