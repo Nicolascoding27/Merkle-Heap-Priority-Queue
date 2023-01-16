@@ -19,3 +19,11 @@ There are several benefits of using Merkle heap-based queueing for developers in
 **Increased reliability:** The ability to efficiently compare and hash elements in the queue would improve the accuracy and reliability of the data, as it would be able to more accurately detect and prevent errors or inconsistencies. 
 
 **Flexible criteria for queueing:** As our implementation will be modular, builders can define their queuing criteria depending on their different use cases.
+
+**Functions and operations** 
+The operations that could be executed using this library are
+
+| Operation | #1    | #2    |
+| :---:   | :---: | :---: |
+| Description | 301   | 283   |
+| Complexity | 301   | 283   |
