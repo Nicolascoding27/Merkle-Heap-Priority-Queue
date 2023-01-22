@@ -1,10 +1,25 @@
 import { Field } from "snarkyjs";
+import {MerkleTree, isReady}from 'snarkyjs';
 
-export class MerkleHeap {
+export class MerkleHeap extends MerkleTree{
 
-    constructor() { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
+    private nextIndexToAdd: bigint;
+
+    constructor(height: number) { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
     //Option 2: Instance Merkle Tree library in a variable , can theuy accesses to the private methods? 
-        
+        super(height);
+        this.nextIndexToAdd = 0n;
+    }
+
+    private getFatherIndexOfChild( childIndex: bigint ) {
+        return childIndex > 0n ? (childIndex - 1n) / 2n : null;
+    }
+
+    private getChildIndexesOfFather( fatherIndex: bigint ) {
+        return {
+            left: (2n * fatherIndex) + 1n,
+            right: (2n * fatherIndex) + 2n
+        }
     }
 
     /**
@@ -17,6 +32,22 @@ export class MerkleHeap {
         // Compare the element with its father. If they are in the correct order, stop
         // Otherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
+        this.setLeaf(this.nextIndexToAdd, value);
+
+        let currentChildIndex = this.nextIndexToAdd;
+        let fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
+        let fatherValue = this.getNode(0, this.nextIndexToAdd);
+
+        while( fatherValue.gte(value) && fatherIndex !== null ) {
+            this.setLeaf( fatherIndex, value );
+            this.setLeaf( currentChildIndex, fatherValue );  
+
+            currentChildIndex = fatherIndex;
+            fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
+            fatherValue = this.getNode(0, this.nextIndexToAdd);
+        }
+
+        this.nextIndexToAdd = this.nextIndexToAdd + 1n;
     }
 
     /**

@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2019",
+    "lib": [
+      "es2020","esnext"
+    ],
     "module": "es2022",
-    "lib": ["dom", "esnext"],
+    "target": "es2020",
     "outDir": "./build",
     "rootDir": ".",
     "strict": true,
