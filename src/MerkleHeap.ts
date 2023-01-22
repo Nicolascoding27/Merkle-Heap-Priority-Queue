@@ -30,17 +30,16 @@ export class MerkleHeap extends MerkleTree{
     insert( value: Field ) {
         // Insert the element at the leftmost open space in the bottom of the heap.
         // Compare the element with its father. If they are in the correct order, stop
-        // Otherwise swap the element with its father and make the comparison again.
+        // Otgitherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
         this.setLeaf(this.nextIndexToAdd, value);
-
         let currentChildIndex = this.nextIndexToAdd;
         let fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
         let fatherValue = this.getNode(0, this.nextIndexToAdd);
 
-        while( fatherValue.gte(value) && fatherIndex !== null ) {
+        while( fatherValue.gt(value) && fatherIndex !== null ) {
             this.setLeaf( fatherIndex, value );
-            this.setLeaf( currentChildIndex, fatherValue );  
+            this.setLeaf( currentChildIndex, fatherValue );
 
             currentChildIndex = fatherIndex;
             fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
