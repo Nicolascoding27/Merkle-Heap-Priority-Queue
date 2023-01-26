@@ -24,7 +24,7 @@ There are several benefits of using Merkle heap-based queueing for developers in
 The operations that could be executed using this library are
 
 | Operation | Description | Targeted Complexity  
-| :---:   | :---: | :---: | :---:   | :---: | :---:| :---:   | :---:   | :---: | :---: | :---:   | :---: |
+| :---:   | :---: | :---:
 | Insert | The insert function will modify the pointers given in the array that constitutes the data of the Merkle Tree | O(log(n))
 | deleteKey | With a given key deletes an arbitrary element from the queue.   | O(log(n)
 | clear | Removes all nodes from a Merkle-Heap|O(1)
