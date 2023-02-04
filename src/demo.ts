@@ -19,3 +19,6 @@ console.log("Result: ", result);
 // //Insert
 // merkleHeap.setLeaf(0n, new Field(0));
 
+
+// Add a testing for accessing an index bigger than the leafCount of the Merkle Tree
+

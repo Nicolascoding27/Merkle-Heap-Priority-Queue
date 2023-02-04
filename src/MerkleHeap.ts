@@ -1,8 +1,11 @@
 import { Field } from "snarkyjs";
 import {MerkleTree, isReady}from 'snarkyjs';
 
+// O solo es un Heap con valores positivos, o gastamos el doble de espacio en hojas.
+
 export class MerkleHeap extends MerkleTree{
 
+    // Change the name of this variable to heapCount?
     private nextIndexToAdd: bigint;
 
     constructor(height: number) { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
@@ -16,10 +19,35 @@ export class MerkleHeap extends MerkleTree{
     }
 
     private getChildIndexesOfFather( fatherIndex: bigint ) {
+        let leftIndex = (2n * fatherIndex) + 1n;
+
+        if( leftIndex >= this.nextIndexToAdd ) return {left: null, right: null};
+
         return {
-            left: (2n * fatherIndex) + 1n,
-            right: (2n * fatherIndex) + 2n
+            left: leftIndex,
+            right: leftIndex + 1n
         }
+    }
+
+    private getSmallerChildIndexOfFather( fatherIndex: bigint ) {
+        let childIndexes = this.getChildIndexesOfFather( fatherIndex );
+
+        let leftChildValue = this.getMerkleTreeLeaf( childIndexes.left );
+        let rightChildValue = this.getMerkleTreeLeaf( childIndexes.right );
+
+        if( !leftChildValue ) return null;
+
+        return !rightChildValue || leftChildValue.lte(rightChildValue) ? childIndexes.left : childIndexes.right;
+    }
+
+    private getHeapRoot() {
+        return this.getMerkleTreeLeaf(0n);
+    }
+
+    private getMerkleTreeLeaf( index: bigint | null ) {
+        return index && index >= 0 && index < this.nextIndexToAdd
+            ? this.getNode(0, index) 
+            : null;
     }
 
     /**
@@ -30,20 +58,20 @@ export class MerkleHeap extends MerkleTree{
     insert( value: Field ) {
         // Insert the element at the leftmost open space in the bottom of the heap.
         // Compare the element with its father. If they are in the correct order, stop
-        // Otgitherwise swap the element with its father and make the comparison again.
+        // Otherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
         this.setLeaf(this.nextIndexToAdd, value);
         let currentChildIndex = this.nextIndexToAdd;
         let fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
-        let fatherValue = this.getNode(0, this.nextIndexToAdd);
+        let fatherValue = this.getMerkleTreeLeaf(fatherIndex);
 
-        while( fatherValue.gt(value) && fatherIndex !== null ) {
+        while( fatherIndex !== null && fatherValue !== null && fatherValue.gt(value) ) {
             this.setLeaf( fatherIndex, value );
             this.setLeaf( currentChildIndex, fatherValue );
 
             currentChildIndex = fatherIndex;
             fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
-            fatherValue = this.getNode(0, this.nextIndexToAdd);
+            fatherValue = this.getMerkleTreeLeaf(fatherIndex);
         }
 
         this.nextIndexToAdd = this.nextIndexToAdd + 1n;
@@ -62,8 +90,38 @@ export class MerkleHeap extends MerkleTree{
      * Delete the minimum element in the queue.
      * @returns the min value deleted from the queue.
      */
-    deleteMin(): Field {
-        return new Field(0);
+    deleteMin(): Field | null {
+        // Replace the root of the tree with the last element of the last level.
+        // Reduce this.nextIndexToAdd
+        // Set the deleted leaf to a zero value in the MerkleTree (This is absoulutely necessary??)
+        // Compare the element with its children. If it is in correct order, stop.
+        // If not, swap the element.
+        // Repeat this until the heap property is correct.
+        const root = this.getHeapRoot();
+
+        let lastElementIndex = this.nextIndexToAdd - 1n;
+        let currentValue = this.getMerkleTreeLeaf(lastElementIndex);
+
+        if( !currentValue ) return null;
+
+        this.setLeaf(0n, currentValue);
+        this.nextIndexToAdd = lastElementIndex;
+        this.setLeaf(lastElementIndex, new Field(0));
+
+        let currentIndex = 0n;
+        let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+        let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+
+        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.gt(smallerChildValue) ) {
+            this.setLeaf(currentIndex, smallerChildValue);
+            this.setLeaf(smallerChildIndex, currentValue);
+
+            currentIndex = smallerChildIndex;
+            smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+            smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+        }
+
+        return root;
     }
 
     /**
@@ -87,8 +145,8 @@ export class MerkleHeap extends MerkleTree{
     /**
      * @returns the min element of the queue without deleting it.
      */
-    findMin(): Field {
-        return new Field(0);
+    findMin(): Field | null {
+        return this.getHeapRoot();
     }
 
     /**
