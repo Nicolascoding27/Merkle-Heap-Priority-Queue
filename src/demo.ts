@@ -5,11 +5,7 @@ import {MerkleTree, isReady,Field}from 'snarkyjs';
 await isReady;
 const merkleHeap = new MerkleHeap(2);
 
-
-let bigint10 = 10n;
-let result = bigint10 - 2n
-
-console.log("Result: ", result);
+console.log("Merkle Heap: ", merkleHeap);
 // let test1 = merkleHeap.getNode(0, 0n);
 // console.log('TEST1', test1)
 
