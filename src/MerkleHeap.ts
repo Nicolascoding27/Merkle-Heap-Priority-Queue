@@ -1,5 +1,9 @@
 import { Field } from "snarkyjs";
-import {MerkleTree, isReady}from 'snarkyjs';
+import {
+    Circuit,
+    MerkleTree, 
+    isReady
+}from 'snarkyjs';
 
 // O solo es un Heap con valores positivos, o gastamos el doble de espacio en hojas.
 
@@ -44,8 +48,8 @@ export class MerkleHeap extends MerkleTree{
         return this.getMerkleTreeLeaf(0n);
     }
 
-    private getMerkleTreeLeaf( index: bigint | null ) {
-        return index && index >= 0 && index < this.nextIndexToAdd
+    getMerkleTreeLeaf( index: bigint | null ) {
+        return index !== null && index >= 0 && index < this.nextIndexToAdd
             ? this.getNode(0, index) 
             : null;
     }
@@ -65,7 +69,8 @@ export class MerkleHeap extends MerkleTree{
         let fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
         let fatherValue = this.getMerkleTreeLeaf(fatherIndex);
 
-        while( fatherIndex !== null && fatherValue !== null && fatherValue.gt(value) ) {
+        // TODO: Review if is necessary to use Field.gt instead of Field.toBigInt() > Field.toBigInt()
+        while( fatherIndex !== null && fatherValue !== null && fatherValue.toBigInt() > value.toBigInt() ) {
             this.setLeaf( fatherIndex, value );
             this.setLeaf( currentChildIndex, fatherValue );
 
@@ -112,7 +117,7 @@ export class MerkleHeap extends MerkleTree{
         let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
         let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
 
-        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.gt(smallerChildValue) ) {
+        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.toBigInt() > smallerChildValue.toBigInt() ) {
             this.setLeaf(currentIndex, smallerChildValue);
             this.setLeaf(smallerChildIndex, currentValue);
 
