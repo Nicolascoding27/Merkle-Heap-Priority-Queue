@@ -48,6 +48,19 @@ export class MerkleHeap extends MerkleTree{
         return this.getMerkleTreeLeaf(0n);
     }
 
+    private findElementIndex( valueToFind: Field ): bigint | null {
+        let currentElement;
+
+        for( let i = 0n; i < this.nextIndexToAdd; i++ ) {            
+            currentElement = this.getMerkleTreeLeaf( i );
+
+            if( currentElement?.equals( valueToFind ).toBoolean() )
+                return i;
+        }
+
+        return null;
+    }
+
     getMerkleTreeLeaf( index: bigint | null ) {
         return index !== null && index >= 0 && index < this.nextIndexToAdd
             ? this.getNode(0, index) 
@@ -87,7 +100,31 @@ export class MerkleHeap extends MerkleTree{
      * @param value that is going to be searched and deleted if it is found.
      * @returns the value deleted from the queue.
      */
-    deleteElement( value: Field ): Field {
+    deleteElement( value: Field ): Field | null {
+        let elementToDeleteIndex = this.findElementIndex( value );
+
+        let lastElementIndex = this.nextIndexToAdd - 1n;
+        let currentValue = this.getMerkleTreeLeaf( lastElementIndex );
+
+        if( !elementToDeleteIndex || !currentValue ) return null;
+
+        this.setLeaf(elementToDeleteIndex, currentValue);
+        this.setLeaf(lastElementIndex, new Field(0));
+        this.nextIndexToAdd = this.nextIndexToAdd - 1n;
+
+        let currentIndex = elementToDeleteIndex;
+        let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+        let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+
+        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.toBigInt() > smallerChildValue.toBigInt() ) {
+            this.setLeaf(currentIndex, smallerChildValue);
+            this.setLeaf(smallerChildIndex, currentValue);
+
+            currentIndex = smallerChildIndex;
+            smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+            smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+        }
+
         return value;
     }
 
@@ -110,8 +147,8 @@ export class MerkleHeap extends MerkleTree{
         if( !currentValue ) return null;
 
         this.setLeaf(0n, currentValue);
-        this.nextIndexToAdd = lastElementIndex;
         this.setLeaf(lastElementIndex, new Field(0));
+        this.nextIndexToAdd = this.nextIndexToAdd - 1n;
 
         let currentIndex = 0n;
         let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
@@ -143,8 +180,8 @@ export class MerkleHeap extends MerkleTree{
      * @param value to search.
      * @returns true if the value is in the queue or false otherwise.
      */
-    inQueue( value: Field ): Boolean {
-        return true;
+    inQueue( value: Field ): boolean {
+        return this.findElement( value ) == null ? false : true;
     }
 
     /**
@@ -155,6 +192,18 @@ export class MerkleHeap extends MerkleTree{
     }
 
     /**
+     * Find an arbitrary element in the heap without deleting it.
+     * @param valueToFind
+     * @returns the element found or null if it doesn't exist.
+     */
+    findElement( valueToFind: Field ): Field | null {
+        let elementFoundIndex = this.findElementIndex( valueToFind );
+
+        return this.getMerkleTreeLeaf( elementFoundIndex );
+    }
+
+    /**
+     * // TODO: We are going to implement this?
      * @returns the max element of the queue without deleting it.
      */
     findMax(): Field {
