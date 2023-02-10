@@ -61,6 +61,45 @@ export class MerkleHeap extends MerkleTree{
         return null;
     }
 
+    private downHeap( startingIndex: bigint ) {
+        let currentIndex = startingIndex;
+        let currentValue = this.getMerkleTreeLeaf( currentIndex );
+
+        if( !currentValue ) return;
+
+        let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+        let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+
+        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.toBigInt() > smallerChildValue.toBigInt() ) {
+            this.setLeaf(currentIndex, smallerChildValue);
+            this.setLeaf(smallerChildIndex, currentValue);
+
+            currentIndex = smallerChildIndex;
+            smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
+            smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+        }
+    }
+
+    private upHeap( startingIndex: bigint ) {
+        let currentIndex = startingIndex;
+        let currentValue = this.getMerkleTreeLeaf(currentIndex);
+
+        if( !currentValue ) return;
+
+        let fatherIndex = this.getFatherIndexOfChild(currentIndex);
+        let fatherValue = this.getMerkleTreeLeaf(fatherIndex);
+
+        // TODO: Review if is necessary to use Field.gt instead of Field.toBigInt() > Field.toBigInt()
+        while( fatherIndex !== null && fatherValue !== null && fatherValue.toBigInt() > currentValue.toBigInt() ) {
+            this.setLeaf( fatherIndex, currentValue );
+            this.setLeaf( currentIndex, fatherValue );
+
+            currentIndex = fatherIndex;
+            fatherIndex = this.getFatherIndexOfChild(currentIndex);
+            fatherValue = this.getMerkleTreeLeaf(fatherIndex);
+        }
+    }
+
     getMerkleTreeLeaf( index: bigint | null ) {
         return index !== null && index >= 0 && index < this.nextIndexToAdd
             ? this.getNode(0, index) 
@@ -78,21 +117,30 @@ export class MerkleHeap extends MerkleTree{
         // Otherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
         this.setLeaf(this.nextIndexToAdd, value);
-        let currentChildIndex = this.nextIndexToAdd;
-        let fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
-        let fatherValue = this.getMerkleTreeLeaf(fatherIndex);
-
-        // TODO: Review if is necessary to use Field.gt instead of Field.toBigInt() > Field.toBigInt()
-        while( fatherIndex !== null && fatherValue !== null && fatherValue.toBigInt() > value.toBigInt() ) {
-            this.setLeaf( fatherIndex, value );
-            this.setLeaf( currentChildIndex, fatherValue );
-
-            currentChildIndex = fatherIndex;
-            fatherIndex = this.getFatherIndexOfChild(currentChildIndex);
-            fatherValue = this.getMerkleTreeLeaf(fatherIndex);
-        }
-
+        this.upHeap( this.nextIndexToAdd );
         this.nextIndexToAdd = this.nextIndexToAdd + 1n;
+    }
+
+    /**
+     * Delete an arbitrary element of the queue at a given index.
+     * @param index where the element to delete is going to be located
+     * @returns the value that was deleted from the queue.
+     */
+    deleteElementAtIndex( index: bigint ): Field | null {
+        if( index < 0 && index >= this.nextIndexToAdd ) return null;
+
+        let lastElementIndex = this.nextIndexToAdd - 1n;
+        let currentValue = this.getMerkleTreeLeaf( lastElementIndex );
+
+        if( !currentValue ) return null;
+
+        this.setLeaf(index, currentValue);
+        this.setLeaf(lastElementIndex, new Field(0));
+        this.nextIndexToAdd = this.nextIndexToAdd - 1n;
+
+        this.downHeap( index );
+
+        return currentValue;
     }
 
     /**
@@ -103,29 +151,9 @@ export class MerkleHeap extends MerkleTree{
     deleteElement( value: Field ): Field | null {
         let elementToDeleteIndex = this.findElementIndex( value );
 
-        let lastElementIndex = this.nextIndexToAdd - 1n;
-        let currentValue = this.getMerkleTreeLeaf( lastElementIndex );
-
-        if( !elementToDeleteIndex || !currentValue ) return null;
-
-        this.setLeaf(elementToDeleteIndex, currentValue);
-        this.setLeaf(lastElementIndex, new Field(0));
-        this.nextIndexToAdd = this.nextIndexToAdd - 1n;
-
-        let currentIndex = elementToDeleteIndex;
-        let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
-        let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
-
-        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.toBigInt() > smallerChildValue.toBigInt() ) {
-            this.setLeaf(currentIndex, smallerChildValue);
-            this.setLeaf(smallerChildIndex, currentValue);
-
-            currentIndex = smallerChildIndex;
-            smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
-            smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
-        }
-
-        return value;
+        return elementToDeleteIndex !== null 
+            ? this.deleteElementAtIndex( elementToDeleteIndex ) 
+            : null;
     }
 
     /**
@@ -139,40 +167,42 @@ export class MerkleHeap extends MerkleTree{
         // Compare the element with its children. If it is in correct order, stop.
         // If not, swap the element.
         // Repeat this until the heap property is correct.
-        const root = this.getHeapRoot();
+        return this.deleteElementAtIndex(0n);
+    }
 
-        let lastElementIndex = this.nextIndexToAdd - 1n;
-        let currentValue = this.getMerkleTreeLeaf(lastElementIndex);
-
-        if( !currentValue ) return null;
-
-        this.setLeaf(0n, currentValue);
-        this.setLeaf(lastElementIndex, new Field(0));
+    /**
+     * Delete the min element of the heap and then insert another element.
+     * It is more efficient than executing a deleteMin and an insert independently.
+     * @param insertValue 
+     * @returns the value that was inserted after the deleteMin
+     */
+    deleteMinThenInsert( insertValue: Field ): Field {
+        this.setLeaf(0n, insertValue);
         this.nextIndexToAdd = this.nextIndexToAdd - 1n;
 
-        let currentIndex = 0n;
-        let smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
-        let smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
+        this.downHeap( 0n );
 
-        while( smallerChildIndex !== null && smallerChildValue !== null && currentValue.toBigInt() > smallerChildValue.toBigInt() ) {
-            this.setLeaf(currentIndex, smallerChildValue);
-            this.setLeaf(smallerChildIndex, currentValue);
-
-            currentIndex = smallerChildIndex;
-            smallerChildIndex = this.getSmallerChildIndexOfFather( currentIndex );
-            smallerChildValue = this.getMerkleTreeLeaf( smallerChildIndex );
-        }
-
-        return root;
+        return insertValue;
     }
 
     /**
      * Insert an element into the heap and then extract the root of the tree.
-     * It is more efficiente than executing an insert and a deleteMin independently.
+     * It is more efficient than executing an insert and a deleteMin independently.
      * @param insertValue 
+     * @returns the min value deleted from the queue.
      */
     insertThenDeleteMin( insertValue: Field ): Field {
-        return new Field(0);
+        const root = this.getHeapRoot();
+
+        if( root == null || root?.toBigInt() > insertValue.toBigInt() )
+            return insertValue;
+
+        this.setLeaf(0n, insertValue);
+        this.nextIndexToAdd = this.nextIndexToAdd - 1n;
+
+        this.downHeap( 0n );
+
+        return root;
     }
 
     /**
