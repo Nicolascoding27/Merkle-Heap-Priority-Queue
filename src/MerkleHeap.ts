@@ -49,7 +49,7 @@ export class MerkleHeap extends MerkleTree{
     }
 
     //TODO: REVIEW NAME
-    getMerkleTreeLeaf( index: bigint | null ) {
+   public  getMerkleTreeLeaf( index: bigint | null ) {
         return index !== null && index >= 0 && index < this.nextIndexToAdd
             ? this.getNode(0, index) 
             : null;
