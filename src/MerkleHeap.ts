@@ -22,7 +22,7 @@ export class MerkleHeap extends MerkleTree{
         return childIndex > 0n ? (childIndex - 1n) / 2n : null;
     }
 
-    private getChildIndexesOfFather( fatherIndex: bigint ) {
+     getChildIndexesOfFather( fatherIndex: bigint ) {
         let leftIndex = (2n * fatherIndex) + 1n;
 
         if( leftIndex >= this.nextIndexToAdd ) return {left: null, right: null};
@@ -87,7 +87,7 @@ export class MerkleHeap extends MerkleTree{
      * Delete an arbitrary element of the queue with a given value.
      * @param value that is going to be searched and deleted if it is found.
      * @returns the value deleted from the queue.
-     */
+   `  */
     deleteElement( value: Field ): Field {
         return value;
     }
