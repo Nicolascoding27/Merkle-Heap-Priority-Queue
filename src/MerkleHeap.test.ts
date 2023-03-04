@@ -51,16 +51,22 @@ describe('Merkle Heap', () => {
             console.log('NODES=>',nodes)
         //  The father is the root node 
             let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
+            console.log('current number',currentFather?.toBigInt())
             for (let i = 0; i < nodes && currentFather !== null; i++) {
+              console.log('ITERATION NUMBER',i)
+              console.log('CHILDREN')
               let children = merkleHeap.getChildIndexesOfFather(BigInt(i));
-              if (children.left !== null) {
-                let childrenLeftValue = merkleHeap.getMerkleTreeLeaf(children.left);
+              console.log(children)
+              let childrenLeftValue = merkleHeap.getMerkleTreeLeaf(children.left);
+              console.log('LEFT CHILD',childrenLeftValue)
+              let childrenRightValue = merkleHeap.getMerkleTreeLeaf(children.right);
+              console.log('RIGHT CHILD',childrenRightValue)
+              if (childrenLeftValue !== null) {
                 expect(childrenLeftValue?.toBigInt()).toBeGreaterThanOrEqual(
                   currentFather.toBigInt()
                 );
               }
-              if (children.right !== null) {
-                let childrenRightValue = merkleHeap.getMerkleTreeLeaf(children.right);
+              if (childrenRightValue !== null) {
                 expect(childrenRightValue?.toBigInt()).toBeGreaterThanOrEqual(
                   currentFather.toBigInt()
                 );
@@ -70,4 +76,9 @@ describe('Merkle Heap', () => {
         //   }
         })
   });
+  describe('Delete Min function test',()=>{
+    it('',async () => {
+      
+    })
+  })
 });
