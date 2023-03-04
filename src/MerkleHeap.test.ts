@@ -44,9 +44,10 @@ describe('Merkle Heap', () => {
           merkleHeap.insert(Field(17));
           merkleHeap.insert(Field(62));
         //  Verifying Heap property for a Min Heap 
-        //  # of Nodes = 2^(H+!)-1
+        //  # of Nodes = (2^H)-1
         //TODO:FIX 
-            let nodes = 2 ^ (merkleHeap.height - 1);
+            let nodes = (2 ** merkleHeap.height) -1;
+            console.log('HEIGHT=>',merkleHeap.height)
             console.log('NODES=>',nodes)
         //  The father is the root node 
             let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
