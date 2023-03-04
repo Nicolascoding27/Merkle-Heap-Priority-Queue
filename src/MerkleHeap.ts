@@ -6,18 +6,20 @@ import {
 }from 'snarkyjs';
 
 // O solo es un Heap con valores positivos, o gastamos el doble de espacio en hojas.
-
+await isReady
 export class MerkleHeap extends MerkleTree{
-
     // Change the name of this variable to heapCount?
     private nextIndexToAdd: bigint;
-
-    constructor(height: number) { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
+    constructor (height: number) { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
     //Option 2: Instance Merkle Tree library in a variable , can theuy accesses to the private methods? 
         super(height);
         this.nextIndexToAdd = 0n;
     }
-
+    // async init (callback:any) {
+    //     await isReady;
+    //     // do something async and call the callback:
+    //     callback.bind(this)();
+    // }
     private getFatherIndexOfChild( childIndex: bigint ) {
         return childIndex > 0n ? (childIndex - 1n) / 2n : null;
     }
@@ -136,6 +138,7 @@ export class MerkleHeap extends MerkleTree{
      * @param insertValue 
      */
     insertThenDeleteMin( insertValue: Field ): Field {
+        // await isReady()
         return new Field(0);
     }
 

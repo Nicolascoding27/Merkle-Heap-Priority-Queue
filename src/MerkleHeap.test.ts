@@ -21,8 +21,9 @@ describe('Merkle Heap', () => {
   //Test for constructor function
   //If the heap was initialized succesfully so it is empty the root should correspont to the hash of the child nodes which are Field(0) and its hashes.
   //In the case of Heigh=3 the root  must be equal to the H(h(Field(0),h(Field(0))))
-  it('Initializing an empty Merkle Heap',() => {
-    const merkleHeap = new MerkleHeap(3);
+  it('Initializing an empty Merkle Heap',async () => {
+    await isReady;
+    const merkleHeap = new MerkleHeap (3)
     let merkleRoot = merkleHeap.getRoot();
 
     let hashOfZeroes = Poseidon.hash([new Field(0), new Field(0)]);
