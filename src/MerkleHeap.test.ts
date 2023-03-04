@@ -76,8 +76,17 @@ describe('Merkle Heap', () => {
         //   }
         })
   });
-  describe('Delete Min function test',()=>{
-    it('',async () => {
+  describe('Delete Element function test',()=>{
+    it('With a given value delete a number of elements and then verifies that the element is not in the Heap',async () => {
+      
+    })
+  })
+  describe('Delete Min Element function test',()=>{
+    it('Should delete the least value in the heap',async () => {
+      //In case of a Min Heap, the least value is the root or father
+      //So after deleting the min Element, the father should change
+      //And the value that was deleted should have been the father
+      let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
       
     })
   })
