@@ -92,8 +92,9 @@ describe('Merkle Heap', () => {
   describe('Delete Min function test', () => {
     it('Verifies that the min number is being deleted', async () => {
       const merkleHeap = new MerkleHeap(2);
-      const minValue1= Field(-20)
-      console.log('Min Value1=>',minValue1.toBigInt())
+      const minValue1= Field(1);
+      // console.log('Min Value1=>',minValue1.toConstant())
+      // console.log(minValue1.assertEquals(-1))
       const minValue2= Field(480)
       const minValue3= Field(10289838)
       merkleHeap.insert(minValue1)
