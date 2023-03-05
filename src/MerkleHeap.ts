@@ -11,10 +11,13 @@ export class MerkleHeap extends MerkleTree{
 
     // Change the name of this variable to heapCount?
     private nextIndexToAdd: bigint;
+    private numberOfNodes: bigint;
 
     constructor(height: number) { //Option 1 Merkle Heap extendes from Merkle Tree so we call Merkle Tree constrcutr 
-    //Option 2: Instance Merkle Tree library in a variable , can theuy accesses to the private methods? 
-        super(height);
+    //Option 2: Instance Merkle Tree library in a variable , can theuy accesses to the private methods?
+        const merkleTreeHeight = height + 1;
+        super(merkleTreeHeight);
+        this.numberOfNodes = BigInt( (2**height) - 1 );
         this.nextIndexToAdd = 0n;
     }
 
@@ -117,6 +120,12 @@ export class MerkleHeap extends MerkleTree{
         // Otherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
         let currentIndexToAdd = this.nextIndexToAdd;
+
+        if( currentIndexToAdd >= this.numberOfNodes )
+            throw new Error(
+                `Heap is full and value cannot be inserted. Upper index limit: ${this.numberOfNodes}, current index to insert: ${currentIndexToAdd}`
+            );
+
         this.setLeaf(currentIndexToAdd, value);
         this.nextIndexToAdd = this.nextIndexToAdd + 1n;
         this.upHeap( currentIndexToAdd );
