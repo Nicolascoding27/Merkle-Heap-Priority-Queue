@@ -29,6 +29,10 @@ let leafAfterInsert = merkleHeap.getMerkleTreeLeaf( 0n );
 console.log("Inserted leaf: ", leafAfterInsert?.toString());
 
 merkleHeap.insert(new Field(8));
+merkleHeap.insert(new Field(10));
+merkleHeap.insert(new Field(9));
+merkleHeap.insert(new Field(7));
+// merkleHeap.insert(new Field(5));
 console.log("Merkle Heap after insert: ", merkleHeap);
 
 console.log("Leafs (0n): ", merkleHeap.getMerkleTreeLeaf( 0n )?.toString());
