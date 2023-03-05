@@ -116,9 +116,10 @@ export class MerkleHeap extends MerkleTree{
         // Compare the element with its father. If they are in the correct order, stop
         // Otherwise swap the element with its father and make the comparison again.
         // Until the Heap Property is correct.
-        this.setLeaf(this.nextIndexToAdd, value);
-        this.upHeap( this.nextIndexToAdd );
+        let currentIndexToAdd = this.nextIndexToAdd;
+        this.setLeaf(currentIndexToAdd, value);
         this.nextIndexToAdd = this.nextIndexToAdd + 1n;
+        this.upHeap( currentIndexToAdd );
     }
 
     /**
@@ -128,7 +129,8 @@ export class MerkleHeap extends MerkleTree{
      */
     deleteElementAtIndex( index: bigint ): Field | null {
         if( index < 0 && index >= this.nextIndexToAdd ) return null;
-
+        const elementToDelete = this.getMerkleTreeLeaf(index);
+        
         let lastElementIndex = this.nextIndexToAdd - 1n;
         let currentValue = this.getMerkleTreeLeaf( lastElementIndex );
 
@@ -140,7 +142,7 @@ export class MerkleHeap extends MerkleTree{
 
         this.downHeap( index );
 
-        return currentValue;
+        return elementToDelete;
     }
 
     /**

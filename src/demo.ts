@@ -20,22 +20,22 @@ let hashOfZeroes = Poseidon.hash([new Field(0), new Field(0)]);
 let hashOfHashOfZeroes = Poseidon.hash([hashOfZeroes, hashOfZeroes]);
 console.log("Hash of hash of zeroes: ", hashOfHashOfZeroes.toString());
 
-
-merkleHeap.insert(new Field(10));
-console.log("Merkle Heap after insert: ", merkleHeap);
-// TODO: Test that the value in the level 1 equals the hash of Field(10) and Field(0)
-
-let leafAfterInsert = merkleHeap.getMerkleTreeLeaf( 0n );
-console.log("Inserted leaf: ", leafAfterInsert?.toString());
-
-merkleHeap.insert(new Field(8));
-console.log("Merkle Heap after insert: ", merkleHeap);
-
-console.log("Leafs (0n): ", merkleHeap.getMerkleTreeLeaf( 0n )?.toString());
-console.log("Leafs (1n): ", merkleHeap.getMerkleTreeLeaf( 1n )?.toString());
+console.log("------------------------------------------");
+merkleHeap.insert(Field(6))
+merkleHeap.insert(Field(5))
+merkleHeap.insert(Field(4))
+console.log('FATHER',merkleHeap.getMerkleTreeLeaf(0n)?.toBigInt())
+console.log('FATHER2',merkleHeap.getMerkleTreeLeaf(1n)?.toBigInt())
+console.log('FATHER3',merkleHeap.getMerkleTreeLeaf(2n)?.toBigInt())
+const firstElement= merkleHeap.deleteMin()
+const seconfElement= merkleHeap.deleteMin()
+const thirdElement= merkleHeap.deleteMin()
+console.log('Element deleted => ',firstElement?.toBigInt())
+console.log('Element 2 deleted => ',seconfElement?.toBigInt())
+console.log('Element 3 deleted => ',thirdElement?.toBigInt())
 
 console.log("\nSearching elements...");
-let elementFound = merkleHeap.findElement(new Field(8));
+let elementFound = merkleHeap.findElement(new Field(5));
 console.log("Element found: ", elementFound?.toString());
 
 // Add a testing for accessing an index bigger than the leafCount of the Merkle Tree
