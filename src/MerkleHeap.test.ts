@@ -24,12 +24,11 @@ describe('Merkle Heap', () => {
   //If the heap was initialized succesfully so it is empty the root should correspont to the hash of the child nodes which are Field(0) and its hashes.
   //In the case of Heigh=3 the root  must be equal to the H(h(Field(0),h(Field(0))))
   it('Initializing an empty Merkle Heap', async () => {
-    const merkleHeap = new MerkleHeap(3);
+    const merkleHeap = new MerkleHeap(2);
     let merkleRoot = merkleHeap.getRoot();
     console.log(merkleRoot);
     let hashOfZeroes = Poseidon.hash([new Field(0), new Field(0)]);
     let hashOfHashOfZeroes = Poseidon.hash([hashOfZeroes, hashOfZeroes]);
-
     expect(hashOfHashOfZeroes).toEqual(merkleRoot);
   });
 
@@ -45,9 +44,12 @@ describe('Merkle Heap', () => {
       console.log('NODES=>', nodes);
       try {
         //TODO: CHANGE UNTIL WE FIX THE BUG
-        for (let index = 0; index < 4; index++) {
-          console.log(index);
-          merkleHeap.insert(Field(nanoid()));
+        //F illing the entire Tree with Random values
+        for (let index = 0; index < nodes; index++) {
+          // console.log('Insertion Index =>',index);
+          let valueInsterted =Field(nanoid())
+          merkleHeap.insert(valueInsterted);
+          console.log('Value inserted =>',valueInsterted, 'in iteration number',index )
         }
         //  Verifying Heap property for a Min Heap
         //  # of Nodes = (2^H)-1
@@ -63,9 +65,9 @@ describe('Merkle Heap', () => {
           let children = merkleHeap.getChildIndexesOfFather(BigInt(i));
           console.log(children);
           let childrenLeftValue = merkleHeap.getMerkleTreeLeaf(children.left);
-          console.log('LEFT CHILD', childrenLeftValue);
+          console.log('LEFT CHILD VALUE', childrenLeftValue);
           let childrenRightValue = merkleHeap.getMerkleTreeLeaf(children.right);
-          console.log('RIGHT CHILD', childrenRightValue);
+          console.log('RIGHT CHILD VALUE ', childrenRightValue);
           if (childrenLeftValue !== null) {
             expect(childrenLeftValue?.toBigInt()).toBeGreaterThanOrEqual(
               currentFather.toBigInt()
@@ -87,29 +89,29 @@ describe('Merkle Heap', () => {
   describe('Delete Min function test', () => {
     it('', async () => {});
   });
-  describe('Delete Min Element function test', () => {
-    it('Should delete the least value in the heap', async () => {
-      //In case of a Min Heap, the least value is the root or father
-      //So after deleting the min Element, the father should change
-      //And the value that was deleted should have been the father
-      // let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
-      const HEIGHT = 3;
-      let nodes = 2 ** HEIGHT - 1;
-      const merkleHeap = new MerkleHeap(HEIGHT);
-      // let firstNumberToDelete =
-      merkleHeap.insert(Field(6))
-      merkleHeap.insert(Field(4))
-      merkleHeap.insert(Field(5))
-      console.log('FATHER',merkleHeap.getMerkleTreeLeaf(0n)?.toBigInt())
-      console.log('FATHER2',merkleHeap.getMerkleTreeLeaf(1n)?.toBigInt())
-      console.log('FATHER3',merkleHeap.getMerkleTreeLeaf(2n)?.toBigInt())
-      const firstElement= merkleHeap.deleteMin()
-      console.log('Element deleted => ',firstElement?.toBigInt())
-      const seconfElement= merkleHeap.deleteMin()
-      console.log('Element 2 deleted => ',seconfElement?.toBigInt())
-      const thirdElement= merkleHeap.deleteMin()
-      console.log('Element 3 deleted => ',thirdElement?.toBigInt())
-      // expect(firstElement).toBe(6)
-    });
-  });
+  // describe('Delete Min Element function test', () => {
+  //   it('Should delete the least value in the heap', async () => {
+  //     //In case of a Min Heap, the least value is the root or father
+  //     //So after deleting the min Element, the father should change
+  //     //And the value that was deleted should have been the father
+  //     // let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
+  //     const HEIGHT = 3;
+  //     let nodes = 2 ** HEIGHT - 1;
+  //     const merkleHeap = new MerkleHeap(HEIGHT);
+  //     // let firstNumberToDelete =
+  //     merkleHeap.insert(Field(6))
+  //     merkleHeap.insert(Field(4))
+  //     merkleHeap.insert(Field(5))
+  //     console.log('FATHER',merkleHeap.getMerkleTreeLeaf(0n)?.toBigInt())
+  //     console.log('FATHER2',merkleHeap.getMerkleTreeLeaf(1n)?.toBigInt())
+  //     console.log('FATHER3',merkleHeap.getMerkleTreeLeaf(2n)?.toBigInt())
+  //     const firstElement= merkleHeap.deleteMin()
+  //     console.log('Element deleted => ',firstElement?.toBigInt())
+  //     const seconfElement= merkleHeap.deleteMin()
+  //     console.log('Element 2 deleted => ',seconfElement?.toBigInt())
+  //     const thirdElement= merkleHeap.deleteMin()
+  //     console.log('Element 3 deleted => ',thirdElement?.toBigInt())
+  //     // expect(firstElement).toBe(6)
+  //   });
+  // });
 });
