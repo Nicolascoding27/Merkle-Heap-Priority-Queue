@@ -93,6 +93,7 @@ export class MerkleHeap extends MerkleTree{
         let fatherValue = this.getMerkleTreeLeaf(fatherIndex);
 
         // TODO: Review if is necessary to use Field.gt instead of Field.toBigInt() > Field.toBigInt()
+        //TODO: This is messing up with negative values 
         while( fatherIndex !== null && fatherValue !== null && fatherValue.toBigInt() > currentValue.toBigInt() ) {
             this.setLeaf( fatherIndex, currentValue );
             this.setLeaf( currentIndex, fatherValue );

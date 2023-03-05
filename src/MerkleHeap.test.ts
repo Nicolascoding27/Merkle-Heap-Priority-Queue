@@ -33,7 +33,8 @@ describe('Merkle Heap', () => {
   });
 
   //Tests for insert functionß
-  //We need to  test that the Heap property is there after n number of insertions.
+  //We need to  test that the Heap property is correct after n number of insertions
+  //We use a function to fill the Merkle heap with random values and then test the Heap property
   describe('Insert function test', () => {
     it('Verifies Heap property after fill the tree for Height=3', async () => {
       //   //For H=3
@@ -86,8 +87,28 @@ describe('Merkle Heap', () => {
       }
     });
   });
+  //We need to test that after n number insertions we are deleting the min number.
+  //Also we need to test that this nummber does not live in the Heap anymore. 
   describe('Delete Min function test', () => {
-    it('', async () => {});
+    it('Verifies that the min number is being deleted', async () => {
+      const merkleHeap = new MerkleHeap(2);
+      const minValue1= Field(-20)
+      console.log('Min Value1=>',minValue1.toBigInt())
+      const minValue2= Field(480)
+      const minValue3= Field(10289838)
+      merkleHeap.insert(minValue1)
+      merkleHeap.insert(minValue2)
+      merkleHeap.insert(minValue3)
+      const firstDeletion= merkleHeap.deleteMin()
+      console.log('First Deletion',firstDeletion?.toBigInt())
+      expect(firstDeletion?.toBigInt()).toBe(minValue1?.toBigInt())
+      const secondDeletion= merkleHeap.deleteMin()
+      expect(secondDeletion?.toBigInt()).toBe(minValue2?.toBigInt())
+      console.log('Second Deletion',secondDeletion)
+      const thirdDeletion= merkleHeap.deleteMin()
+      console.log('Third Deletion',thirdDeletion)
+      expect(thirdDeletion?.toBigInt()).toBe(minValue3.toBigInt())
+    });
   });
   // describe('Delete Min Element function test', () => {
   //   it('Should delete the least value in the heap', async () => {
