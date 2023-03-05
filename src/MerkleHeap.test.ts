@@ -101,39 +101,41 @@ describe('Merkle Heap', () => {
       merkleHeap.insert(minValue2)
       merkleHeap.insert(minValue3)
       const firstDeletion= merkleHeap.deleteMin()
+      //For veryfing that the value is not anymore in the queue I use the inQueue function
+      const isFirstDeletionInQueue=merkleHeap.inQueue(minValue1)
+      expect(isFirstDeletionInQueue).toBe(false)
+      console.log('Is first in queue?', isFirstDeletionInQueue)
       console.log('First Deletion',firstDeletion?.toBigInt())
       expect(firstDeletion?.toBigInt()).toBe(minValue1?.toBigInt())
       const secondDeletion= merkleHeap.deleteMin()
+      const isSecondDeletionInQueue=merkleHeap.inQueue(minValue2)
+      expect(isSecondDeletionInQueue).toBe(false)
       expect(secondDeletion?.toBigInt()).toBe(minValue2?.toBigInt())
+
       console.log('Second Deletion',secondDeletion)
       const thirdDeletion= merkleHeap.deleteMin()
+      const isThirdDeletionInQueue=merkleHeap.inQueue(minValue3)
+      expect(isThirdDeletionInQueue).toBe(false)
       console.log('Third Deletion',thirdDeletion)
       expect(thirdDeletion?.toBigInt()).toBe(minValue3.toBigInt())
+      
     });
   });
-  // describe('Delete Min Element function test', () => {
-  //   it('Should delete the least value in the heap', async () => {
-  //     //In case of a Min Heap, the least value is the root or father
-  //     //So after deleting the min Element, the father should change
-  //     //And the value that was deleted should have been the father
-  //     // let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
-  //     const HEIGHT = 3;
-  //     let nodes = 2 ** HEIGHT - 1;
-  //     const merkleHeap = new MerkleHeap(HEIGHT);
-  //     // let firstNumberToDelete =
-  //     merkleHeap.insert(Field(6))
-  //     merkleHeap.insert(Field(4))
-  //     merkleHeap.insert(Field(5))
-  //     console.log('FATHER',merkleHeap.getMerkleTreeLeaf(0n)?.toBigInt())
-  //     console.log('FATHER2',merkleHeap.getMerkleTreeLeaf(1n)?.toBigInt())
-  //     console.log('FATHER3',merkleHeap.getMerkleTreeLeaf(2n)?.toBigInt())
-  //     const firstElement= merkleHeap.deleteMin()
-  //     console.log('Element deleted => ',firstElement?.toBigInt())
-  //     const seconfElement= merkleHeap.deleteMin()
-  //     console.log('Element 2 deleted => ',seconfElement?.toBigInt())
-  //     const thirdElement= merkleHeap.deleteMin()
-  //     console.log('Element 3 deleted => ',thirdElement?.toBigInt())
-  //     // expect(firstElement).toBe(6)
-  //   });
-  // });
+  describe('Delete Element at indexfunction test', () => {
+    it('Should delete the least value in the heap', async () => {
+      //In case of a Min Heap, the least value is the root or father
+      //So after deleting the min Element, the father should change
+      //And the value that was deleted should have been the father
+      // let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
+      const HEIGHT = 3;
+      let nodes = 2 ** HEIGHT - 1;
+      const merkleHeap = new MerkleHeap(HEIGHT);
+      // let firstNumberToDelete =
+      merkleHeap.insert(Field(6))
+      merkleHeap.insert(Field(4))
+      merkleHeap.insert(Field(5))
+   
+      // expect(firstElement).toBe(6)
+    });
+  });
 });
