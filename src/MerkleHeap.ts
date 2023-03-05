@@ -25,7 +25,7 @@ export class MerkleHeap extends MerkleTree{
         return childIndex > 0n ? (childIndex - 1n) / 2n : null;
     }
 
-    private getChildIndexesOfFather( fatherIndex: bigint ) {
+    public getChildIndexesOfFather( fatherIndex: bigint ) {
         let leftIndex = (2n * fatherIndex) + 1n;
 
         if( leftIndex >= this.nextIndexToAdd ) return {left: null, right: null};
