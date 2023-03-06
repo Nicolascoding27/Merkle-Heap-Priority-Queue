@@ -121,20 +121,46 @@ describe('Merkle Heap', () => {
       
     });
   });
-  describe('Delete Element at indexfunction test', () => {
-    it('Should delete the least value in the heap', async () => {
+  describe('Delete Element at index function test', () => {
+
+    it('Should delete the element in a specific index', async () => {
       //In case of a Min Heap, the least value is the root or father
       //So after deleting the min Element, the father should change
       //And the value that was deleted should have been the father
       // let currentFather = merkleHeap.getMerkleTreeLeaf(0n);
-      const HEIGHT = 3;
-      let nodes = 2 ** HEIGHT - 1;
+      const HEIGHT = 2
       const merkleHeap = new MerkleHeap(HEIGHT);
-      // let firstNumberToDelete =
-      merkleHeap.insert(Field(6))
-      merkleHeap.insert(Field(4))
-      merkleHeap.insert(Field(5))
-   
+      // let firstNumberToDelete =  
+      const firstValue= Field(1);
+      // console.log('Min Value1=>',firstValue.toConstant())
+      // console.log(firstValue.assertEquals(-1))
+      const secondValue= Field(480)
+      console.log('SECOND VALUE => ',secondValue.toBigInt())
+      const thirdValue= Field(10289838)
+      merkleHeap.insert(firstValue)
+      merkleHeap.insert(secondValue)
+      merkleHeap.insert(thirdValue)
+      //the heap structure should be 0n:Field(1),1n:Field(480) || 1n:Field(10289838) ,2n:Field(480) || 1n:Field(10289838) 
+      const firstDeletion= merkleHeap.deleteElementAtIndex(0n)
+      console.log('first delation => ',firstDeletion)
+      expect(firstDeletion?.toBigInt()).toBe(firstDeletion?.toBigInt())
+      //For veryfing that the value is not anymore in the queue I use the inQueue function
+      const isFirstDeletionInQueue=merkleHeap.inQueue(firstValue)
+      expect(isFirstDeletionInQueue).toBe(false)
+      console.log('Is first in queue?', isFirstDeletionInQueue)
+      // console.log('First Deletion',firstDeletion?.toBigInt())
+      const secondDeletion= merkleHeap.deleteElementAtIndex(0n)
+      // console.log('2 delation => ',secondDeletion?.toBigInt())
+      const thirdDeletion= merkleHeap.deleteElementAtIndex(0n)
+      // console.log('3rd delation => ',thirdDeletion?.toBigInt())
+      const isSecondDeletionInQueue=merkleHeap.inQueue(secondValue)
+      const isThirdDeletionInQueue=merkleHeap.inQueue(thirdValue)
+      expect(isSecondDeletionInQueue).toBe(false)
+      expect(secondDeletion?.toBigInt()).toBe(secondValue?.toBigInt())
+      expect(isThirdDeletionInQueue).toBe(false)
+      expect(thirdDeletion?.toBigInt()).toBe(thirdValue.toBigInt())
+      
+
       // expect(firstElement).toBe(6)
     });
   });
