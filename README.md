@@ -27,13 +27,12 @@ The operations that could be executed using this library are
 | :---:   | :---: | :---:
 | Insert | The insert function will modify the pointers given in the array that constitutes the data of the Merkle Tree | O(log(n))
 | deleteKey | With a given key deletes an arbitrary element from the queue.   | O(log(n)
-| clear | Removes all nodes from a Merkle-Heap|O(1)
+| deleteMin() |Removes the element that was placed in the front of the queue | O(log(n))
 | getRoot() | Gets the root hash  of a Merkle-Heap  | O(1)
 | getWitness() |Gets the Witness of a Merkle-Heap   | O(1)
-| Revert() | It will execute the inverse queueing logic that was defined in the constructor (i.e., The logic in the constructor was from greatest to least it will reconstruct  the Merkle-Heap based on the logic from least to greatest)  | O(nlog(n))
 | isInQueue() |It checks if a given value or hash is inside a MerkleQueue  | O(1)
 | findMin() |Finds the element with the least value in the queue. | O(1)
 | findMax() |Finds the element with the highest value in the queue. | O(1)
-| insertExtract() |It inserts and element and then extracts another one  | O(log(n))
-| deleteMin() |Removes the element that was placed in the front of the queue | O(log(n))
+| insertExtract() |It inserts and element and then extracts another one  | O(log(n))|
+
 **Thanks to Evan Shapiro and Florian from the O(1) labs team for helping us figuring this implementation out** 
