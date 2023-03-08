@@ -18,7 +18,11 @@ There are several benefits of using Merkle heap-based queueing for developers in
 
 **Increased reliability:** The ability to efficiently compare and hash elements in the queue would improve the accuracy and reliability of the data, as it would be able to more accurately detect and prevent errors or inconsistencies. 
 
-**How Queueing works:** For our implementation queueing will work heap-sizing the data that constructs the Merkle-Tree. So all the data will be queued depending on the queueing logic and then a Merkle Tree will be constructed. 
+**How Queueing works:** For our first implementation queueing will work heap-sizing the data that constructs the Merkle-Tree. Our queuing logic satisfies the heap property of a min-heap, where the smallest values have more priority than the greatest ones. 
+
+**Min Heap Example**
+![Min Heap Example](https://cdn.codegym.cc/images/article/d23087ba-4f7e-4c70-9291-801e2ea4cf80/512.jpeg
+ "a title")
 
 **Functions and operations** 
 The operations that could be executed using this library are
@@ -35,4 +39,4 @@ The operations that could be executed using this library are
 | findMax() |Finds the element with the highest value in the queue. | O(1)
 | insertExtract() |It inserts and element and then extracts another one  | O(log(n))|
 
-**Thanks to Evan Shapiro and Florian from the O(1) labs team for helping us figuring this implementation out** 
+**Thanks to Evan Shapiro and Florian from the O(1) labs team for helping us to figure this implementation out** 
