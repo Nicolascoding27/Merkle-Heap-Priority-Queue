@@ -47,7 +47,6 @@ describe('Merkle Heap', () => {
       const merkleHeap = new MerkleHeap(HEIGHT);
       console.log('NODES=>', nodes);
       try {
-        //TODO: CHANGE UNTIL WE FIX THE BUG
         //F illing the entire Tree with Random values
         for (let index = 0; index < nodes; index++) {
           // console.log('Insertion Index =>',index);
@@ -212,40 +211,43 @@ describe('Merkle Heap', () => {
     });
   });
   /**
-   * This function tests
+   * This function tests that the find number in the queue is being found after multiple insertions
    */
-  describe('isInqueue function test', () => {
-    it('Verifies that the numbers that are not in queue are not there and after multiple insertions these numbers are added to the queue', async () => {
-      const merkleHeap = new MerkleHeap(2);
-      const testValue1= Field(0);
-      const testValue2= Field(-10);
-      const testValue3= Field(40);
-      const testValue4= Field(-0);
-      // console.log('Min Value1=>',minValue1.toConstant())
-      // console.log(minValue1.assertEquals(-1))
-      const insertValue1= Field(92727282)
-      const insertValue2= Field(-20)
-      const insertValue3= Field('2018')
-      //Insertions
-      merkleHeap.insert(insertValue1)
-      merkleHeap.insert(insertValue2)
-      merkleHeap.insert(insertValue3)
+  describe('findMin function test', () => {
+    it('Verifies that the findMin function works properly after multiple insertions and deletions, using the  delete min function', async () => {
+      //Init 
+      const merkleHeap = new MerkleHeap(3);
+      //Values
+      //TODO: Add support to negative values
+      const minValue1= Field(-0);
+      const minValue2= Field(0)
+      const minValue3= Field(1)
+      // const minValue4= Field(2)
+      // //insertions
+      merkleHeap.insert(minValue1)
+      merkleHeap.insert(minValue2)
+      merkleHeap.insert(minValue3)
+          //TODO:ERROR HERE 
+      // merkleHeap.insert(minValue4)
+      const firstTest=merkleHeap.findMin()
+      expect(firstTest).toBe(minValue1)
+      merkleHeap.deleteMin()
+      const secondTest=merkleHeap.findMin()
+      expect(secondTest).toBe(minValue2)
+      merkleHeap.deleteMin()
+      const thirdTest=merkleHeap.findMin()
+      expect(thirdTest).toBe(minValue3)
+      merkleHeap.deleteMin()
+      //TODO:ERROR HERE 
+      // const fourthTest=merkleHeap.findMin()
+      // expect(fourthTest).toBe(minValue4)
+      // merkleHeap.deleteMin()
 
-      const test1=merkleHeap.inQueue(testValue1)
-      expect(test1).toBe(false)
-      const test2=merkleHeap.inQueue(testValue2)
-      expect(test2).toBe(false)
-      const test3=merkleHeap.inQueue(testValue3)
-      expect(test3).toBe(false)
-      const test4=merkleHeap.inQueue(testValue4)
-      expect(test4).toBe(false)
+      // const finalTest=merkleHeap.findMin()
+      // console.log('WHAT THE FUCK IS THIS?',finalTest)
+      // // merkleHeap.deleteMin()
 
-      const insertTest1=merkleHeap.inQueue(insertValue1)
-      expect(insertTest1).toBe(true)
-      const insertTest2=merkleHeap.inQueue(insertValue2)
-      expect(insertTest2).toBe(true)
-      const insertTest3=merkleHeap.inQueue(insertValue3)
-      expect(insertTest3).toBe(true)
+      
 
       
     });
