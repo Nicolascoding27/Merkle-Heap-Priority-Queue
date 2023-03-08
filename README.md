@@ -24,6 +24,9 @@ There are several benefits of using Merkle heap-based queueing for developers in
 ![Min Heap Example](https://cdn.codegym.cc/images/article/d23087ba-4f7e-4c70-9291-801e2ea4cf80/512.jpeg
  "a title")
 
+
+
+
 **Functions and operations** 
 The operations that could be executed using this library are
 
