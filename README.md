@@ -1,5 +1,5 @@
 # Merkle-Heap-Priority-Queue
-This is an implementation of Merkle-Heap Priority Queue (), that will contribute to Mina Protocol.
+This is an implementation of Merkle-Heap Priority Queue (https://en.wikipedia.org/wiki/Binary_heap), that will contribute to Mina Protocol.
 
 A Merkle heap-based priority queue will be a data structure that starts as a heap structure and then takes the form of a binary heap . It will allow efficient insertion, deletion, and comparison of elements in a first-in, first-out manner. This makes it possible to perform operations such as finding the minimum or maximum element in the queue or checking whether the queue contains a particular element in constant time and for some operation such as deleting key and inserting in logarithmic time.
 
@@ -37,7 +37,7 @@ The operations that could be executed using this library are
 | deleteMin() |Removes the element that was placed in the front of the queue | O(log(n))
 | getRoot() | Gets the root hash  of a Merkle-Heap  | O(1)
 | getWitness() |Gets the Witness of a Merkle-Heap   | O(1)
-| isInQueue() |It checks if a given value or hash is inside a MerkleQueue  | O(1)
+| inQueue() |It checks if a given value or hash is inside a MerkleQueue  | O(1)
 | findMin() |Finds the element with the least value in the queue. | O(1)
 | findMax() |Finds the element with the highest value in the queue. | O(1)
 | insertExtract() |It inserts and element and then extracts another one  | O(log(n))|

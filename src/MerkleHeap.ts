@@ -51,7 +51,7 @@ export class MerkleHeap extends MerkleTree{
         return this.getMerkleTreeLeaf(0n);
     }
 
-    private findElementIndex( valueToFind: Field ): bigint | null {
+    private  findElementIndex( valueToFind: Field ): bigint | null {
         let currentElement;
 
         for( let i = 0n; i < this.nextIndexToAdd; i++ ) {            
