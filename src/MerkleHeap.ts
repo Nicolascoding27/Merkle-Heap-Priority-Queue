@@ -47,7 +47,7 @@ export class MerkleHeap extends MerkleTree{
         return !rightChildValue || leftChildValue.lte(rightChildValue) ? childIndexes.left : childIndexes.right;
     }
 
-    private getHeapRoot() {
+    public getHeapRoot() {
         return this.getMerkleTreeLeaf(0n);
     }
 

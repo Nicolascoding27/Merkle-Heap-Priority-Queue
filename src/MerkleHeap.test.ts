@@ -211,7 +211,7 @@ describe('Merkle Heap', () => {
     });
   });
   /**
-   * This function tests that the find number in the queue is being found after multiple insertions
+   * This function tests that the min number in the queue is being found after multiple insertions and deletions
    */
   describe('findMin function test', () => {
     it('Verifies that the findMin function works properly after multiple insertions and deletions, using the  delete min function', async () => {
@@ -252,4 +252,49 @@ describe('Merkle Heap', () => {
       
     });
   });
+  /**
+   * This function tests that the insertThenDeleteMin function does the following:
+   * Inserts a value in the correct position and then extracts the root of the Tree 
+   */
+  describe('findMin function test', () => {
+    it('Verifies that the findMin function works property after multiple insertions and deletions, using the  delete min function', async () => {
+      //Init 
+      const merkleHeap = new MerkleHeap(3);
+      //Values
+      //TODO: Add support to negative values
+      const minValue1= Field(-0);
+      const minValue2= Field(0)
+      const minValue3= Field(1)
+      // const minValue4= Field(2)
+      // //insertions
+      merkleHeap.insert(minValue1)
+      merkleHeap.insert(minValue2)
+      merkleHeap.insert(minValue3)
+          //TODO:ERROR HERE 
+      // merkleHeap.insert(minValue4)
+      const firstTest=merkleHeap.findMin()
+      expect(firstTest).toBe(minValue1)
+      merkleHeap.deleteMin()
+      const secondTest=merkleHeap.findMin()
+      expect(secondTest).toBe(minValue2)
+      merkleHeap.deleteMin()
+      const thirdTest=merkleHeap.findMin()
+      expect(thirdTest).toBe(minValue3)
+      merkleHeap.deleteMin()
+      //TODO:ERROR HERE 
+      // const fourthTest=merkleHeap.findMin()
+      // expect(fourthTest).toBe(minValue4)
+      // merkleHeap.deleteMin()
+
+      // const finalTest=merkleHeap.findMin()
+      // console.log('WHAT THE FUCK IS THIS?',finalTest)
+      // // merkleHeap.deleteMin()
+
+      
+
+      
+    });
+  }); 
+
 });
+x

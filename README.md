@@ -35,7 +35,7 @@ The operations that could be executed using this library are
 | Insert | The insert function will modify the pointers given in the array that constitutes the data of the Merkle Tree | O(log(n))
 | deleteKey | With a given key deletes an arbitrary element from the queue.   | O(log(n)
 | deleteMin() |Removes the element that was placed in the front of the queue | O(log(n))
-| getRoot() | Gets the root hash  of a Merkle-Heap  | O(1)
+| getHeapRoot() | Gets the root hash  of a Merkle-Heap  | O(1)
 | getWitness() |Gets the Witness of a Merkle-Heap   | O(1)
 | inQueue() |It checks if a given value or hash is inside a MerkleQueue  | O(1)
 | findMin() |Finds the element with the least value in the queue. | O(1)
