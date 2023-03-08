@@ -40,6 +40,6 @@ The operations that could be executed using this library are
 | inQueue() |It checks if a given value or hash is inside a MerkleQueue  | O(1)
 | findMin() |Finds the element with the least value in the queue. | O(1)
 | findMax() |Finds the element with the highest value in the queue. | O(1)
-| insertThenDeleteMin() |It inserts and element and then extracts another one  | O(log(n))|
+| insertThenDeleteMin() |It inserts and element and then deletes the least one  | O(log(n))|
 
 **Thanks to Evan Shapiro and Florian from the O(1) labs team for helping us to figure this implementation out** 
