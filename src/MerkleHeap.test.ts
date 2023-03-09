@@ -256,7 +256,7 @@ describe('Merkle Heap', () => {
    * This function tests that the insertThenDeleteMin function does the following:
    * Inserts a value in the correct position and then extracts the root of the Tree 
    */
-  describe('findMin function test', () => {
+  describe('findMax function test', () => {
     it('Verifies that the findMin function works property after multiple insertions and deletions, using the  delete min function', async () => {
       //Init 
       const merkleHeap = new MerkleHeap(3);
