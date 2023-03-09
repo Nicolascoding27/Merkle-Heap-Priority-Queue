@@ -92,10 +92,6 @@ async function localDeploy(
       let initialTx = await Mina.transaction(bonsaiTestPk, () => {
           AccountUpdate.fundNewAccount(bonsaiTestPk);
           zkapp.deploy({ zkappKey: zkappKey });
-          // zkapp.compile()
-          // zkapp.sign(zkappKey)
-        //   await zkAppInstance.compile()
-        //   zkapp.init(zkAppPrivatekey)
           zkapp.initState(Field(1));
           console.log('Contract deployed succedfully');
         });
