@@ -1,27 +1,57 @@
 export {};
 import { MerkleHeap } from "./MerkleHeap.js";
 import {
+    matrixProp,
+    CircuitValue,
     Field,
+    SmartContract,
+    PublicKey,
+    method,
+    PrivateKey,
+    Mina,
+    state,
+    State,
     isReady,
+    Poseidon,
+    AccountUpdate,
+    Bool,
+    Experimental,
+    Circuit,
+    DeployArgs,
+    Permissions,
+    UInt64,
+    Int64,
     MerkleTree,
-    Poseidon
-}from 'snarkyjs';
+    Signature,
+  } from 'snarkyjs';
 
 await isReady;
-const merkleHeap = new MerkleHeap(3);
 
-console.log("Merkle Heap: ", merkleHeap);
+const heap = new MerkleHeap(3);
 
-let merkleRoot = merkleHeap.getRoot();
-console.log("Merkle root: ", merkleRoot.toString());
+export class MerkleHeapDemo extends SmartContract{
+    @state (Field) firstInsertion = State <Field>;
+    //Iniate the heap with 1 insertion
+    @method initState (initialValue:Field){
+        heap.insert(initialValue)
+        //Check if the min is equal to the initial value as it is just one
+        let test= heap.findMin()
+        console.log('TEST', test?.toBigInt())
+    }
+    @method fillHeap (height:Number){
+        h
+    }
+    @method insertValue(value:Field){
+        heap.insert(value)
+    }
+    @method deleteValue(valueToDelete:Field){
 
-console.log("------------------------------------------");
-merkleHeap.insert(Field(6))
-merkleHeap.insert(Field(5))
-merkleHeap.insert(Field(4))
+    }
+    @method deleteMin(){
 
-merkleRoot = merkleHeap.getRoot();
-console.log("Merkle root: ", merkleRoot.toString());
+    }
+}
 
-// Add a testing for accessing an index bigger than the leafCount of the Merkle Tree
+
+
 
