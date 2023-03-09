@@ -1,3 +1,7 @@
+/**
+ * This file contains all code related to the Merkle Heap implementation available for SnarkyJS.
+ */
+
 import { Field } from "snarkyjs";
 import {
     Circuit,
@@ -5,8 +9,17 @@ import {
     isReady
 }from 'snarkyjs';
 
-// O solo es un Heap con valores positivos, o gastamos el doble de espacio en hojas.
-
+/**
+ * A [Merkle Heap] (https://en.wikipedia.org/wiki/Binary_heap) is a Binary Heap built on 
+ * top of a [Merkle Tree] (https://en.wikipedia.org/wiki/Merkle_tree).
+ * 
+ * A Merkle Heap allows developers to easily and securely build priority queues with verifiable data.
+ * 
+ * This library is built to be used with ZKApps and to be verifiable for large amounts of data.
+ * 
+ * To understand how to use the library look at our [docs] (https://bon-sai.notion.site/Merkle-Heap-Based-Priority-Queue-Implementation-Docs-b198b02da22f4eb3b4a31a235b99dafe)
+ * 
+ */
 export class MerkleHeap extends MerkleTree{
 
     // Change the name of this variable to heapCount?
@@ -25,7 +38,7 @@ export class MerkleHeap extends MerkleTree{
         return childIndex > 0n ? (childIndex - 1n) / 2n : null;
     }
 
-    public getChildIndexesOfFather( fatherIndex: bigint ) {
+    private getChildIndexesOfFather( fatherIndex: bigint ) {
         let leftIndex = (2n * fatherIndex) + 1n;
 
         if( leftIndex >= this.nextIndexToAdd ) return {left: null, right: null};
@@ -51,7 +64,7 @@ export class MerkleHeap extends MerkleTree{
         return this.getMerkleTreeLeaf(0n);
     }
 
-    private  findElementIndex( valueToFind: Field ): bigint | null {
+    private findElementIndex( valueToFind: Field ): bigint | null {
         let currentElement;
 
         for( let i = 0n; i < this.nextIndexToAdd; i++ ) {            

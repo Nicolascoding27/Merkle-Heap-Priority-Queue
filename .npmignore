@@ -1,7 +1,9 @@
 # TypeScript files
 src
-#
-build
+
+# Build
+build/*.ts
+build/demo.js
 
 # Editor
 .vscode
