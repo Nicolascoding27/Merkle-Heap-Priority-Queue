@@ -21,7 +21,7 @@ There are several benefits of using Merkle heap-based queueing for developers in
 **How Queueing works:** For our first implementation queueing will work heap-sizing the data that constructs the Merkle-Tree. Our queuing logic satisfies the heap property of a min-heap, where the smallest values have more priority than the greatest ones. 
 
 **Min Heap Example**
-![Min Heap Example](https://cdn.codegym.cc/images/article/d23087ba-4f7e-4c70-9291-801e2ea4cf80/512.jpeg
+![Min Heap Example](notion://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F772a93dd-4d63-49d0-b5bb-d0b11046c7c8%2FScreenshot_2023-03-09_at_12.09.50.png?id=29b11841-54bc-46bc-ae11-e8c55937f7c2&table=block&spaceId=b01c34b6-d317-44b2-9025-38e5730648a5&width=2000&userId=ad9f0319-9499-49de-b3f6-7ea8dd1d4a87&cache=v2
  "a title")
 
 
