@@ -1,5 +1,5 @@
 {
-  "name": "merkle-heap-priority-queue",
+  "name": "snarkyjs-merkle-heap",
   "version": "0.1.0",
   "description": "Implementation of a Merkle Heap for SnarkyJS, a framework to develop ZK-snarks on Mina Protocol.",
   "main": "build/src/index.js",
