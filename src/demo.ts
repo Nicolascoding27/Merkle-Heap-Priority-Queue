@@ -106,6 +106,10 @@ async function localDeploy(
   await localDeploy(zkapp,zkappKey,bonsaiTestPk)
 //   await initialTx.send();    
 
+// async function insertAnddeleteElement (value:Field){
+//     let tx = await Mina.transaction
+
+// }
 /**
  * `txn.send()` returns a pending transaction with two methods - `.wait()` and `.hash()`
  * `.hash()` returns the transaction hash
