@@ -27,15 +27,11 @@ import {
   import { customAlphabet } from 'nanoid';
 await isReady;
 
-const heap = new MerkleHeap(3);
 const height =3 
+const heap = new MerkleHeap(height);
 let proofsEnabled = false;
 export class MerkleHeapDemo extends SmartContract{
     @state (Field) heapRoot = State <Field>();
-    //Iniate the heap with 1 insertion
-    // @method init(zkappKey: PrivateKey) {
-    //     super.init(zkappKey);
-    //   }
     @method initState (initialValue:Field){
         heap.insert(initialValue)
         //Check if the min is equal to the initial value as it is just one
