@@ -47,7 +47,7 @@ describe('Merkle Heap', () => {
       const merkleHeap = new MerkleHeap(HEIGHT);
       console.log('NODES=>', nodes);
       try {
-        //F illing the entire Tree with Random values
+        //Filling the entire Tree with Random values
         for (let index = 0; index < nodes; index++) {
           // console.log('Insertion Index =>',index);
           let valueInsterted =Field(nanoid())
