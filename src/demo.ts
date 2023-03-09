@@ -55,15 +55,16 @@ export class MerkleHeapDemo extends SmartContract{
     //     }
 
     // } 
-    // @method insertValue(value:Field){
-    //     heap.insert(value)
-    //     const newRoot = heap.findMin()
-    //     this.heapRoot.set(newRoot!)
-    // }
+    @method insertValue(value:Field){
+        heap.insert(value)
+        const newRoot = heap.findMin()
+        this.heapRoot.set(newRoot!)
+    }
     // @method deleteValue(valueToDelete:Field){
     // }
-    // @method deleteMin(){
-    // }
+    @method deleteMin(){
+        return heap.deleteMin()
+    }
     // @method deleteElementAtIndex(index:Field){
     //     const indexBigInt=index.toBigInt()
         
@@ -102,10 +103,19 @@ async function localDeploy(
   await localDeploy(zkapp,zkappKey,bonsaiTestPk)
 //   await initialTx.send();    
 
-// async function insertAnddeleteElement (value:Field){
-//     let tx = await Mina.transaction
-
-// }
+async function insertAnddeleteElement (value:Field){
+    let tx = await Mina.transaction(bonsaiTestPk, () => {
+        // zkapp.inser
+        zkapp.insertValue(value);
+        //This should be Field(1)
+        let firstDeletion=zkapp.deleteMin()
+        console.log('First deletion => ',firstDeletion?.toBigInt())
+      });
+        await tx.prove();
+        tx.sign([zkappKey]);
+        await tx.send();
+}
+await insertAnddeleteElement(Field(22))
 /**
  * `txn.send()` returns a pending transaction with two methods - `.wait()` and `.hash()`
  * `.hash()` returns the transaction hash
