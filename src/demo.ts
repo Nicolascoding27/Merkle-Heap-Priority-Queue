@@ -1,42 +1,57 @@
 export {};
 import { MerkleHeap } from "./MerkleHeap.js";
 import {
+    matrixProp,
+    CircuitValue,
     Field,
+    SmartContract,
+    PublicKey,
+    method,
+    PrivateKey,
+    Mina,
+    state,
+    State,
     isReady,
+    Poseidon,
+    AccountUpdate,
+    Bool,
+    Experimental,
+    Circuit,
+    DeployArgs,
+    Permissions,
+    UInt64,
+    Int64,
     MerkleTree,
-    Poseidon
-}from 'snarkyjs';
+    Signature,
+  } from 'snarkyjs';
 
 await isReady;
-const merkleHeap = new MerkleHeap(3);
 
-console.log("Merkle Heap: ", merkleHeap);
+const heap = new MerkleHeap(3);
 
-let merkleRoot = merkleHeap.getRoot();
-console.log("Merkle root: ", merkleRoot.toString());
+export class MerkleHeapDemo extends SmartContract{
+    @state (Field) firstInsertion = State <Field>;
+    //Iniate the heap with 1 insertion
+    @method initState (initialValue:Field){
+        heap.insert(initialValue)
+        //Check if the min is equal to the initial value as it is just one
+        let test= heap.findMin()
+        console.log('TEST', test?.toBigInt())
+    }
+    @method fillHeap (height:Number){
+        h
+    }
+    @method insertValue(value:Field){
+        heap.insert(value)
+    }
+    @method deleteValue(valueToDelete:Field){
 
-// TODO: Write a test of this
-let hashOfZeroes = Poseidon.hash([new Field(0), new Field(0)]);
-let hashOfHashOfZeroes = Poseidon.hash([hashOfZeroes, hashOfZeroes]);
-console.log("Hash of hash of zeroes: ", hashOfHashOfZeroes.toString());
+    }
+    @method deleteMin(){
 
-console.log("------------------------------------------");
-merkleHeap.insert(Field(6))
-merkleHeap.insert(Field(5))
-merkleHeap.insert(Field(4))
-console.log('FATHER',merkleHeap.getMerkleTreeLeaf(0n)?.toBigInt())
-console.log('FATHER2',merkleHeap.getMerkleTreeLeaf(1n)?.toBigInt())
-console.log('FATHER3',merkleHeap.getMerkleTreeLeaf(2n)?.toBigInt())
-const firstElement= merkleHeap.deleteMin()
-const seconfElement= merkleHeap.deleteMin()
-const thirdElement= merkleHeap.deleteMin()
-console.log('Element deleted => ',firstElement?.toBigInt())
-console.log('Element 2 deleted => ',seconfElement?.toBigInt())
-console.log('Element 3 deleted => ',thirdElement?.toBigInt())
+    }
+}
 
-console.log("\nSearching elements...");
-let elementFound = merkleHeap.findElement(new Field(5));
-console.log("Element found: ", elementFound?.toString());
 
-// Add a testing for accessing an index bigger than the leafCount of the Merkle Tree
+
 
