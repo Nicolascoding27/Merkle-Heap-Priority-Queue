@@ -10,3 +10,13 @@ build/demo.js
 
 # System
 .DS_Store
+
+.eslintrc.cjs
+.gitignore
+.prettierignore
+.prettierrc
+babel.config.cjs
+config.json
+jest-resolver.cjs
+jest.config.js
+tsconfig.json
