@@ -295,6 +295,4 @@ describe('Merkle Heap', () => {
       
     });
   }); 
-
 });
-x
