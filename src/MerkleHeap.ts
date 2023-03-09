@@ -5,7 +5,7 @@ import {
     isReady
 }from 'snarkyjs';
 
-// O solo es un Heap con valores positivos, o gastamos el doble de espacio en hojas.
+
 
 export class MerkleHeap extends MerkleTree{
 
