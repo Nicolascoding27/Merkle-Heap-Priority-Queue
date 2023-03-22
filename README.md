@@ -26,7 +26,6 @@ There are several benefits of using Merkle heap-based queueing for developers in
 
 
 
-
 **Functions and operations** 
 The operations that could be executed using this library are
 
