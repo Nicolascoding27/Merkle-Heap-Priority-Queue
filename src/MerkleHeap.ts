@@ -223,7 +223,7 @@ export class MerkleHeap extends MerkleTree {
   insertThenDeleteMin(insertValue: Field): Field {
     const root = this.getHeapRoot();
 
-    if (root == null || root?.toBigInt() > insertValue.toBigInt())
+    if (root === null || root?.toBigInt() > insertValue.toBigInt())
       return insertValue;
 
     this.setLeaf(0n, insertValue);
@@ -240,7 +240,7 @@ export class MerkleHeap extends MerkleTree {
    * @returns true if the value is in the queue or false otherwise.
    */
   inQueue(value: Field): boolean {
-    return this.findElement(value) == null ? false : true;
+    return this.findElement(value) === null ? false : true;
   }
 
   /**

@@ -1,4 +1,3 @@
-export {};
 import { MerkleHeap } from './MerkleHeap.js';
 import {
   Field,
@@ -25,18 +24,7 @@ export class MerkleHeapDemo extends SmartContract {
     this.heapRoot.set(firstRoot!);
     console.log('FIRST ROOT', firstRoot?.toBigInt());
   }
-  // @method fillHeap (height:Field){
-  //     let nodes = (2 ** height) - 1;
-  //     const nanoid = customAlphabet('1234567890', 2);
-  //     //Basic method for filling the entire Heap  with Random values
-  //     for (let index = 0; index < nodes; index++) {
-  //       // console.log('Insertion Index =>',index);
-  //       let valueInsterted =Field(nanoid())
-  //       heap.insert(valueInsterted);
-  //       console.log('Value inserted =>',valueInsterted, 'in iteration number',index )
-  //     }
 
-  // }
   @method insertValue(value: Field) {
     heap.insert(value);
     const newRoot = heap.findMin();
@@ -47,15 +35,6 @@ export class MerkleHeapDemo extends SmartContract {
   @method deleteMin() {
     return heap.deleteMin();
   }
-  // @method deleteElementAtIndex(index:Field){
-  //     const indexBigInt=index.toBigInt()
-
-  // }
-  // //Demo of basic method to check if an element is in the queue
-  // @method inQueue (value:Field){
-  //     const isInQueue=heap.inQueue(value)
-  //     return isInQueue
-  // }
 }
 // ZK APP SETUP
 let zkappKey = PrivateKey.random();
@@ -98,15 +77,3 @@ async function insertAnddeleteElement(value: Field) {
   await tx.send();
 }
 await insertAnddeleteElement(Field(22));
-/**
- * `txn.send()` returns a pending transaction with two methods - `.wait()` and `.hash()`
- * `.hash()` returns the transaction hash
- * `.wait()` automatically resolves once the transaction has been included in a block. this is redundant for the LocalBlockchain, but very helpful for live testnets
- */
-// await pendingDeployTx.wait();
-
-// function insert(){
-//     // this.heapRoot.assertEquals(newRoot!)
-//     // const testNewRoot = this.heapRoot.get()
-//     // console.log('NEW ROOT', testNewRoot)
-// }

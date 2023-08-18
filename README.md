@@ -1,8 +1,8 @@
 # Merkle-Heap-Priority-Queue
 
-This is an implementation of Merkle-Heap Priority Queue (https://en.wikipedia.org/wiki/Binary_heap), that will contribute to Mina Protocol.
+This is an implementation of Merkle-Heap Priority Queue, that will contribute to Mina Protocol.
 
-A Merkle heap-based priority queue will be a data structure that starts as a heap structure and then takes the form of a binary heap . It will allow efficient insertion, deletion, and comparison of elements in a first-in, first-out manner. This makes it possible to perform operations such as finding the minimum or maximum element in the queue or checking whether the queue contains a particular element in constant time and for some operation such as deleting key and inserting in logarithmic time.
+A Merkle heap-based priority queue will be a data structure that starts as a heap structure and then takes the form of a [binary heap](https://en.wikipedia.org/wiki/Binary_heap). It will allow efficient insertion, deletion, and comparison of elements in a first-in, first-out manner. This makes it possible to perform operations such as finding the minimum or maximum element in the queue or checking whether the queue contains a particular element in constant time and for some operation such as deleting key and inserting in logarithmic time.
 
 **The potential use cases of Merkle heap-based queueing include:**
 
@@ -22,7 +22,7 @@ There are several benefits of using Merkle heap-based queueing for developers in
 **How Queueing works:** For our first implementation queueing will work heap-sizing the data that constructs the Merkle-Tree. Our queuing logic satisfies the heap property of a min-heap, where the smallest values have more priority than the greatest ones.
 
 **Min Heap Example**
-![Min Heap Example](https://cdn.codegym.cc/images/article/d23087ba-4f7e-4c70-9291-801e2ea4cf80/512.jpeg 'a title')
+![Min Heap Example](https://cdn.codegym.cc/images/article/d23087ba-4f7e-4c70-9291-801e2ea4cf80/512.jpeg)
 
 **Functions and operations**
 The operations that could be executed using this library are
