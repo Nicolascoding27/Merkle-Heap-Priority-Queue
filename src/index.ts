@@ -1,3 +1,3 @@
-import { MerkleHeap } from "./MerkleHeap";
+import { MerkleHeap } from './MerkleHeap';
 
 export { MerkleHeap };
