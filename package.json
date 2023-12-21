@@ -13,7 +13,8 @@
     "test": "node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads node_modules/.bin/jest",
     "testw": "node --experimental-vm-modules --experimental-wasm-modules --experimental-wasm-threads node_modules/.bin/jest --watch",
     "lint": "npx eslint src/* --fix",
-    "example": "npx tsc && node --max-old-space-size=4096 ./build/src/example.js"
+    "example": "npx tsc && node --max-old-space-size=4096 ./build/src/example.js",
+    "deploy": "npm run build && node build/src/deploy.js"
   },
   "repository": {
     "type": "git",
@@ -41,6 +42,7 @@
     "@types/jest": "^29.2.5",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "dotenv": "^16.3.1",
     "eslint": "^8.31.0",
     "eslint-plugin-snarkyjs": "^0.3.0",
     "husky": "^8.0.3",
@@ -49,8 +51,9 @@
     "nanoid": "^4.0.1",
     "npm-packlist": "^7.0.4",
     "prettier": "^2.8.3",
-    "snarkyjs": "^0.7.3",
+    "snarkyjs": "^0.9.7",
     "ts-jest": "^29.0.5",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "zkapp-cli": "^0.7.4"
   }
 }
