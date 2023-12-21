@@ -1,16 +1,14 @@
 import { isReady, shutdown, Poseidon, Field } from 'snarkyjs';
 import { MerkleHeap } from '../src/MerkleHeap';
 import { customAlphabet } from 'nanoid';
+
+await isReady;
+
+afterAll(async () => {
+  setTimeout(shutdown, 0);
+});
+
 describe('Merkle Heap', () => {
-  beforeAll(async () => {
-    await isReady;
-  });
-  beforeEach(async () => {
-    await isReady;
-  });
-  afterAll(async () => {
-    setTimeout(shutdown, 300000);
-  });
   //Functions
 
   //Test for constructor function
@@ -20,11 +18,11 @@ describe('Merkle Heap', () => {
     try {
       const merkleHeap = new MerkleHeap(2);
       let merkleRoot = merkleHeap.getRoot();
-      console.log(merkleRoot);
+      // console.log(merkleRoot);
       let hashOfZeroes = Poseidon.hash([new Field(0), new Field(0)]);
       let hashOfHashOfZeroes = Poseidon.hash([hashOfZeroes, hashOfZeroes]);
       expect(hashOfHashOfZeroes).toEqual(merkleRoot);
-    } catch (error) {
+    } catch (error: any) {
       console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
       throw error;
     }
@@ -32,7 +30,7 @@ describe('Merkle Heap', () => {
 
   //Tests for insert function
   //We need to  test that the Heap property is correct after n number of insertions
-  //We use a function to fill the Merkle heap with random values and then test the Heap property
+  //We use a function to fill the Merkle heap wit.skiph random values and then test the Heap property
   describe('Insert function test', () => {
     it('Verifies Heap property after fill the tree for Height=3', async () => {
       //   //For H=3
@@ -83,14 +81,14 @@ describe('Merkle Heap', () => {
           }
           currentFather = merkleHeap.getMerkleTreeLeaf(BigInt(i + 1));
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error, null, 2));
         throw error;
       }
     });
   });
-  //We need to test that after n number insertions we are deleting the min number.
-  //Also we need to test that this nummber does not live in the Heap anymore.
+  // //We need to test that after n number insertions we are deleting the min number.
+  // //Also we need to test that this nummber does not live in the Heap anymore.
   describe('Delete Min function test', () => {
     it('Verifies that the min number is being deleted', async () => {
       try {
@@ -121,7 +119,7 @@ describe('Merkle Heap', () => {
         expect(isThirdDeletionInQueue).toBe(false);
         console.log('Third Deletion', thirdDeletion);
         expect(thirdDeletion?.toBigInt()).toBe(minValue3.toBigInt());
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
         throw error;
       }
@@ -163,15 +161,15 @@ describe('Merkle Heap', () => {
         expect(secondDeletion?.toBigInt()).toBe(secondValue?.toBigInt());
         expect(isThirdDeletionInQueue).toBe(false);
         expect(thirdDeletion?.toBigInt()).toBe(thirdValue.toBigInt());
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
         throw error;
       }
     });
   });
-  /**
-   * This function tests that after multiple  inserts, the function is verifying correctly if the value is part of the queue or not.
-   */
+  // /**
+  //  * This function tests that after multiple  inserts, the function is verifying correctly if the value is part of the queue or not.
+  //  */
   describe('isInqueue function test', () => {
     it('Verifies that the numbers that are not in queue are not there and after multiple insertions these numbers are added to the queue', async () => {
       try {
@@ -205,15 +203,15 @@ describe('Merkle Heap', () => {
         expect(insertTest2).toBe(true);
         const insertTest3 = merkleHeap.inQueue(insertValue3);
         expect(insertTest3).toBe(true);
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
         throw error;
       }
     });
   });
-  /**
-   * This function tests that the min number in the queue is being found after multiple insertions and deletions
-   */
+  // /**
+  //  * This function tests that the min number in the queue is being found after multiple insertions and deletions
+  //  */
   describe('findMin function test', () => {
     it('Verifies that the findMin function works properly after multiple insertions and deletions, using the  delete min function', async () => {
       try {
@@ -240,7 +238,7 @@ describe('Merkle Heap', () => {
         const thirdTest = merkleHeap.findMin();
         expect(thirdTest).toBe(minValue3);
         merkleHeap.deleteMin();
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
         throw error;
       }
@@ -254,10 +252,10 @@ describe('Merkle Heap', () => {
       // // merkleHeap.deleteMin()
     });
   });
-  /**
-   * This function tests that the insertThenDeleteMin function does the following:
-   * Inserts a value in the correct position and then extracts the root of the Tree
-   */
+  // /**
+  //  * This function tests that the insertThenDeleteMin function does the following:
+  //  * Inserts a value in the correct position and then extracts the root of the Tree
+  //  */
   describe('findMax function test', () => {
     it('Verifies that the findMin function works property after multiple insertions and deletions, using the  delete min function', async () => {
       try {
@@ -284,7 +282,7 @@ describe('Merkle Heap', () => {
         const thirdTest = merkleHeap.findMin();
         expect(thirdTest).toBe(minValue3);
         merkleHeap.deleteMin();
-      } catch (error) {
+      } catch (error: any) {
         console.error(JSON.stringify(error?.response?.data?.errors, null, 2));
         throw error;
       }

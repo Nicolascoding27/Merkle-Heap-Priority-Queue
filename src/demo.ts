@@ -1,4 +1,4 @@
-import { MerkleHeap } from './MerkleHeap.js';
+import { MerkleHeap } from './MerkleHeap';
 import {
   Field,
   SmartContract,
@@ -15,16 +15,11 @@ import {
 await isReady;
 
 let proofsEnabled = false;
-// we need the initiate tree root in order to tell the contract about our off-chain storage
-let initialCommitment: Field = Field(0);
 
 const height = 3;
 const heap = new MerkleHeap(height);
 
 export class MerkleHeapDemo extends SmartContract {
-  // private heap!: MerkleHeap;
-
-  @state(Field) commitment = State<Field>();
   @state(Field) heapRoot = State<Field>();
 
   /**
@@ -50,7 +45,6 @@ export class MerkleHeapDemo extends SmartContract {
     //Check if the min is equal to the initial value as it is just one
 
     this.heapRoot.set(initialRoot);
-    this.commitment.set(initialCommitment);
     // console.log('FIRST ROOT', firstRoot?.toBigInt());
   }
 
@@ -69,7 +63,6 @@ Mina.setActiveInstance(Local);
 
 //Test Accounts
 let bonsaiTestPk = Local.testAccounts[0].privateKey;
-let bonsaiTestPublicKey = Local.testAccounts[0].publicKey;
 // let bonsaiTestAccount = bonsaiTestPk.toPublicKey();
 
 async function localDeploy(
